@@ -140,9 +140,10 @@ CG_INLINE CGSize CGAffineTransformGetScale(CGAffineTransform t)
         
         self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.globalInset * 2, self.globalInset * 2)];
         [self.closeButton setAutoresizingMask:(UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin)];
-        self.closeButton.backgroundColor = [UIColor whiteColor];
+        self.closeButton.backgroundColor = [UIColor colorWithRed:0/255.0 green:74/255.0 blue:144/255.0 alpha:1.0];
         self.closeButton.layer.cornerRadius = self.globalInset - 5;
         self.closeButton.userInteractionEnabled = YES;
+        self.closeButton.tintColor = [UIColor whiteColor];
         [self addSubview:self.closeButton];
         
         self.rotateButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width-self.globalInset*2, self.bounds.size.height-self.globalInset*2, self.globalInset*2, self.globalInset*2)];
@@ -169,8 +170,8 @@ CG_INLINE CGSize CGAffineTransformGetScale(CGAffineTransform t)
         
         [self setEnableMoveRestriction:NO];
         [self setEnableClose:YES];
-        [self setEnableRotate:YES];
-        [self setShowsContentShadow:YES];
+        [self setEnableRotate:NO];
+        [self setShowsContentShadow:NO];
         
         [self showEditingHandles];
         [self.labelTextField becomeFirstResponder];
@@ -183,6 +184,10 @@ CG_INLINE CGSize CGAffineTransformGetScale(CGAffineTransform t)
     if (self.labelTextField) {
         self.border.path = [UIBezierPath bezierPathWithRect:self.labelTextField.bounds].CGPath;
         self.border.frame = self.labelTextField.bounds;
+    }
+    
+    if (self.closeButton) {
+        self.closeButton.layer.cornerRadius = CGRectGetWidth(self.closeButton.frame)/2.0;
     }
 }
 
@@ -222,7 +227,7 @@ CG_INLINE CGSize CGAffineTransformGetScale(CGAffineTransform t)
 - (void)setCloseImage:(UIImage *)image
 {
     _closeImage = image;
-    [self.closeButton setImage:_closeImage forState:UIControlStateNormal];
+    [self.closeButton setImage:[_closeImage imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
 }
 
 - (void)setRotateImage:(UIImage *)image
@@ -303,7 +308,7 @@ CG_INLINE CGSize CGAffineTransformGetScale(CGAffineTransform t)
     }
     
     self.showEditingHandles = YES;
-        
+    
     if (self.isEnableClose)       self.closeButton.hidden = NO;
     if (self.isEnableRotate)      self.rotateButton.hidden = NO;
     
