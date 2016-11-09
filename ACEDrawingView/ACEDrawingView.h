@@ -70,6 +70,8 @@ typedef NS_ENUM(NSUInteger, ACEDrawingMode) {
 @property (nonatomic, strong) UIImage *backgroundImage;
 @property (nonatomic, readonly) NSUInteger undoSteps;
 
+@property (nonatomic, strong, readonly) UIImage *customToolImage;
+
 // load external image
 - (void)loadImage:(UIImage *)image;
 - (void)loadImageData:(NSData *)imageData;

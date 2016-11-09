@@ -704,4 +704,24 @@
     return image;
 }
 
+#pragma mark Image custom drawings 
+
+-(UIImage*)customToolImage
+{
+    // init a context
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    
+    // I need to redraw all the lines
+    for (id<ACEDrawingTool> tool in self.pathArray) {
+        if([tool respondsToSelector:@selector(customDraw)]){
+            [tool customDraw];
+        }
+    }
+    
+    // store the image
+    UIImage *customImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return customImage;
+}
+
 @end
