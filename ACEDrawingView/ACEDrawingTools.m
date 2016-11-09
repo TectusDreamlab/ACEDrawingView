@@ -235,25 +235,11 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
 -(void)customDraw
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    UIImage *textImage = [self grabImage];
-    [textImage drawAtPoint:self.labelView.frame.origin];
-}
-
-- (UIImage *)grabImage {
     
-    // Create a "canvas" (image context) to draw in.
-    UIGraphicsBeginImageContextWithOptions(self.labelView.bounds.size, NO, 0.0);  // high res
-    // Make the CALayer to draw in our "canvas".
-    [[self.labelView layer] renderInContext: UIGraphicsGetCurrentContext()];
-    
-    // Fetch an UIImage of our "canvas".
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // Stop the "canvas" from accepting any input.
-    UIGraphicsEndImageContext();
-    
-    // Return the image.
-    return image;
+    NSDictionary *attributes = @{NSFontAttributeName            : [UIFont systemFontOfSize: self.labelView.fontSize],
+                                 NSForegroundColorAttributeName : self.labelView.textColor,
+                                 NSBackgroundColorAttributeName : [UIColor clearColor]};
+    [self.labelView.textValue drawInRect:self.labelView.frame withAttributes:attributes];
 }
 
 - (void)applyToolState:(ACEDrawingToolState *)state
