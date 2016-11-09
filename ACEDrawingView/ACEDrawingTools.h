@@ -53,6 +53,7 @@
 - (void)moveFromPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint;
 
 - (void)draw;
+- (void)customDraw;
 
 - (ACEDrawingToolState *)captureToolState;
 
